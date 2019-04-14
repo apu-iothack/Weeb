@@ -1,0 +1,51 @@
+#include <Servo.h>
+
+//Library for camera and its coding
+
+Servo myservo; //create servo object to control a servo
+int pos = 0; //variable to store the servo position
+int delayInBetween = 5000;  //Delay between 2 servo motor movement
+int button1 = 2, button2 = 3, button3 = 4;
+int delayToStartServo = 1000; //1000 is 1 sec, use (hours x 60 minutes x 1000)
+boolean buttonWasPressed = false;   //to know if the button was pressed
+
+void setup() {
+myservo.attach(9); //attaches the servo on pin 9 to the servo object
+pinMode(button1, INPUT);
+pinMode(button2, INPUT);
+pinMode(button3, INPUT);
+}
+
+void loop() {
+
+if(digitalRead(button1)==LOW){  //if button 1 is pressed
+  delayToStartServo = 1000;  //1000 is 1 sec, this is meant for 1 hour, (hour x 60 x 1000)
+  buttonWasPressed = true;
+}else if(digitalRead(button2)==LOW){
+  delayToStartServo = 2000;
+  buttonWasPressed = true;
+}else if(digitalRead(button3)==LOW){
+  delayToStartServo = 3000;
+  buttonWasPressed = true; 
+}else{
+  buttonWasPressed = false;
+}
+ 
+if (buttonWasPressed=true){
+  delay(delayToStartServo); 
+  for(pos = 0; pos < 90; pos += 1) //goes from 0 degrees to 90 degrees
+  { // in steps of 1 degree
+    myservo.write(pos); //tell servo to go to position in variable 'pos'
+    delay(15); //waits 15ms for the servo to reach the position
+  }
+  delay(delayInBetween);
+  for(pos = 90; pos>=1; pos-=1) //goes from 90 degrees to 0 degrees
+  {
+    myservo.write(pos); //tell servo to go to position in variable 'pos'
+    delay(15); //waits 15ms for the servo to reach the position
+  }
+}
+
+
+
+}
